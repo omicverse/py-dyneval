@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pydyneval-bio"
+version = "0.1.0"
+description = "Pure-Python port of dyneval — trajectory inference benchmark metrics (Saelens et al. Nat Biotechnol 2019)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Zehua Zeng", email = "starlitnightly@163.com" }]
+keywords = ["single-cell", "trajectory", "dyneval", "dynverse", "metrics", "benchmark"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "numpy>=1.23", "scipy>=1.10", "pandas>=1.5", "networkx>=2.8",
+    "scikit-learn>=1.2",
+    "pydynwrap-bio>=0.1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/omicverse/py-dyneval"
+"R upstream" = "https://github.com/dynverse/dyneval"
+
+[tool.setuptools.packages.find]
+include = ["pydyneval*"]
+exclude = ["tests*", "examples*", "dyneval-ref*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::RuntimeWarning"]

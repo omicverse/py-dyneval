@@ -1,0 +1,50 @@
+package: pydyneval
+version: 0.1.0
+upstream:
+  name: dyneval
+  version: 0.9.9
+  source: https://github.com/dynverse/dyneval
+algorithm_class: mixed (deterministic + RF-stochastic)
+fixture:
+  path: data/reference_traj.json
+  description: |
+    3-branch tent trajectory (4 milestones, 30 cells, 50 genes) — gold
+    + slightly-perturbed prediction.
+reference_command: tests/r_reference_driver.R
+candidate_command: tests/_run_candidate.py
+outputs:
+  - name: correlation
+    metric: abs_diff
+    threshold: 0.01
+    class: ordinal
+  - name: him
+    metric: abs_diff
+    threshold: 0.01
+    class: ordinal
+  - name: edge_flip
+    metric: abs_diff
+    threshold: 0.01
+    class: ordinal
+  - name: isomorphic
+    metric: abs_diff
+    threshold: 0.001
+    class: classification
+  - name: F1_branches
+    metric: abs_diff
+    threshold: 0.01
+    class: ranked
+  - name: F1_milestones
+    metric: abs_diff
+    threshold: 0.01
+    class: ranked
+  - name: featureimp_cor
+    metric: abs_diff
+    threshold: 0.10
+    class: ordinal
+    notes: |
+      RF non-determinism — sklearn and R `randomForest` use different
+      tree-splitting RNG; ~0.06 typical |Δ|.
+  - name: featureimp_wcor
+    metric: abs_diff
+    threshold: 0.10
+    class: ordinal
